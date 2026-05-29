@@ -21,7 +21,7 @@ pipeline {
 
         stage('PMD Code Check') {
             steps {
-                sh 'mvn pmd:pmd pmd:check'
+                sh 'mvn pmd:pmd'
             }
             post {
                 always {

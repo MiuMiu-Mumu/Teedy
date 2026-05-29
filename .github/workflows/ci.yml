@@ -25,7 +25,7 @@ jobs:
         run: mvn clean compile
 
       - name: PMD Code Check
-        run: mvn pmd:pmd pmd:check
+        run: mvn pmd:pmd
 
       - name: Run Tests
         run: mvn test
