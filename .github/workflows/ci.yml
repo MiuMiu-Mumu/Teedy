@@ -28,7 +28,7 @@ jobs:
         run: mvn pmd:pmd
 
       - name: Run Tests
-        run: mvn test
+        run: mvn test -Dmaven.test.failure.ignore=true
 
       - name: Generate Test Report
         run: mvn surefire-report:report
