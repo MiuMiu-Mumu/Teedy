@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Maven Build
-        run: mvn clean compile
+        run: mvn clean install -DskipTests
 
       - name: PMD Code Check
         run: mvn pmd:pmd
