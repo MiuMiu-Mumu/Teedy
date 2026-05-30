@@ -46,19 +46,16 @@ pipeline {
 
         stage('Generate Test Report') {
             steps {
-                // 只生成报告，不重复运行测试
                 sh 'mvn surefire-report:report-only -pl docs-core'
-                // 调试：查看实际生成了哪些文件
-                sh 'ls -R docs-core/target/ || true'
             }
             post {
                 always {
                     publishHTML([
-                        allowMissing: true,          // 改为 true，目录不存在也不失败
+                        allowMissing: false,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
-                        reportDir: 'docs-core/target/site',
-                        reportFiles: 'surefire-report.html',
+                        reportDir: 'docs-core/target/reports',      // 改这里
+                        reportFiles: 'surefire.html',               // 改这里（不是 surefire-report.html）
                         reportName: 'Surefire Test Report'
                     ])
                 }
@@ -81,7 +78,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            archiveArtifacts artifacts: '**/target/site/*.html', fingerprint: true
+            archiveArtifacts artifacts: '**/target/reports/*.html', fingerprint: true
             archiveArtifacts artifacts: '**/target/*-javadoc.jar', fingerprint: true
         }
         success {
