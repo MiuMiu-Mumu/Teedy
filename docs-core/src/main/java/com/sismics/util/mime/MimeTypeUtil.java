@@ -20,7 +20,9 @@ public class MimeTypeUtil {
      * @throws IOException e
      */
     public static String guessMimeType(Path file, String name) throws IOException {
-        String mimeType = Files.probeContentType(file);
+//        String mimeType = Files.probeContentType(file);
+        // 修复后（跨平台一致）
+        String mimeType = guessMimeTypeByExtension(name);  // .csv 直接返回 text/csv
 
         if (mimeType == null && name != null) {
             mimeType = URLConnection.getFileNameMap().getContentTypeFor(name);
