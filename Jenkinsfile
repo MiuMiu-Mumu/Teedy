@@ -46,12 +46,15 @@ pipeline {
 
         stage('Generate Test Report') {
             steps {
-                sh 'mvn surefire-report:report -pl docs-core'
+                // 只生成报告，不重复运行测试
+                sh 'mvn surefire-report:report-only -pl docs-core'
+                // 调试：查看实际生成了哪些文件
+                sh 'ls -R docs-core/target/ || true'
             }
             post {
                 always {
                     publishHTML([
-                        allowMissing: false,
+                        allowMissing: true,          // 改为 true，目录不存在也不失败
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
                         reportDir: 'docs-core/target/site',
