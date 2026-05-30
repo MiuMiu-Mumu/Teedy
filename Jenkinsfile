@@ -25,7 +25,10 @@ pipeline {
             }
             post {
                 always {
-                    pmd canRunOnFailed: true, pattern: '**/target/pmd.xml'
+                    recordIssues(
+                                    tools: [pmdParser(pattern: '**/target/pmd.xml')],
+                                    enabledForFailure: true
+                                )
                 }
             }
         }
