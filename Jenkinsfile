@@ -46,7 +46,7 @@ pipeline {
 
         stage('Generate Test Report') {
             steps {
-                sh 'mvn surefire-report:report'
+                sh 'mvn surefire-report:report -pl docs-core'
             }
             post {
                 always {
@@ -54,7 +54,7 @@ pipeline {
                         allowMissing: false,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
-                        reportDir: 'target/site',
+                        reportDir: 'docs-core/target/site',
                         reportFiles: 'surefire-report.html',
                         reportName: 'Surefire Test Report'
                     ])
@@ -78,7 +78,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            archiveArtifacts artifacts: '**/target/site/**/*.html', fingerprint: true
+            archiveArtifacts artifacts: '**/target/site/*.html', fingerprint: true
             archiveArtifacts artifacts: '**/target/*-javadoc.jar', fingerprint: true
         }
         success {
